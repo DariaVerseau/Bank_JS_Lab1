@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Банковский симулятор</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    .section {
+      background: white;
+      padding: 16px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      margin-bottom: 12px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    #history {
+      white-space: pre-wrap;
+      font-family: monospace;
+      background: #f1f1f1;
+      padding: 12px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🏦 Банковский симулятор</h1>
+
+  <div class="section">
+    <h2>Создать аккаунт</h2>
+    <label>Имя владельца: <input type="text" id="holderName" placeholder="Иван Иванов"/></label>
+    <label>Начальный баланс: <input type="number" id="initialBalance" value="0"/></label>
+    <label>ПИН-код (4 цифры): <input type="password" id="pinCode" maxlength="4"/></label>
+    <button onclick="handleCreateAccount()">Создать аккаунт</button>
+  </div>
+
+  <div class="section">
+    <h2>Операции</h2>
+    <label>Номер счёта: <input type="text" id="accountNumber" placeholder="1234567890"/></label>
+    <label>Сумма: <input type="number" id="amount" value="100"/></label>
+    <label>ПИН: <input type="password" id="opPin" maxlength="4"/></label>
+    <button onclick="handleDeposit()">Пополнить</button>
+    <button onclick="handleWithdraw()">Снять</button>
+  </div>
+
+  <div class="section">
+    <h2>Перевод между счетами</h2>
+    <label>От счёта: <input type="text" id="fromAccount" placeholder="1234567890"/></label>
+    <label>Кому (номер счёта): <input type="text" id="toAccount" placeholder="0987654321"/></label>
+    <label>Сумма перевода: <input type="number" id="transferAmount" value="50"/></label>
+    <label>ПИН отправителя: <input type="password" id="transferPin" maxlength="4"/></label>
+    <button onclick="handleTransfer()">Перевести</button>
+  </div>
+
+  <div class="section">
+    <h2>Баланс и история</h2>
+    <label>Номер счёта: <input type="text" id="balanceAccount" placeholder="1234567890"/></label>
+    <label>ПИН: <input type="password" id="balancePin" maxlength="4"/></label>
+    <button onclick="handleGetBalance()">Показать баланс</button>
+    <button onclick="handleGetHistory()">История (последние 7 дней)</button>
+    <div id="history"></div>
+  </div>
+
+  <script src="/bank.js">
+    // Здесь подключается ваша логика из предыдущего ответа:
+    // createAccount, transferFunds, allAccounts и т.д.
+
+    // Пример обработчиков (заглушки):
+    function handleCreateAccount() {
+      alert('Функция создания аккаунта будет реализована в JS');
+    }
+    function handleDeposit() { alert('Пополнение'); }
+    function handleWithdraw() { alert('Снятие'); }
+    function handleTransfer() { alert('Перевод'); }
+    function handleGetBalance() { alert('Баланс'); }
+    function handleGetHistory() { document.getElementById('history').textContent = 'Транзакции появятся здесь'; }
+  </script>
+</body>
+</html>
