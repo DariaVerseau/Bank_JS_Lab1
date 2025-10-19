@@ -130,28 +130,6 @@ const Bank = (function () {
       throw new Error('Invalid PIN');
     }
 
-    // Проверка баланса
-    // Нет прямого доступа к _balance, но можно временно добавить геттер или использовать логику ниже
-    // В данном случае мы не можем напрямую прочитать _balance, поэтому:
-    // → добавим временный метод для проверки (или изменим архитектуру)
-    // Но проще: используем тот факт, что withdraw проверяет баланс — но это не подходит для перевода.
-
-    // Альтернатива: добавим внутренний метод _getBalance()
-    // Добавим его в аккаунт:
-    // (уже подразумевается, что fromAccount — это внутренний объект с приватными методами)
-
-    // Предположим, что fromAccount — это внутренний объект (как возвращаемый createAccount до маскировки)
-    // Чтобы это работало, createAccount должен возвращать полный объект для внутреннего использования в transferFunds
-    // Но для безопасности внешний API не должен включать _*-методы.
-
-    // Поэтому: разделим интерфейсы
-    // Возвращаем из createAccount "публичный" объект, но внутри храним "полный"
-    // Это уже реализовано выше: account — полный, а возвращаем — ограниченный
-
-    // Однако transferFunds вызывается с fromAccount как с публичным объектом → проблема!
-
-    // 🔁 Решение: transferFunds должен принимать accountNumber отправителя, а не объект
-    // Это безопаснее и логичнее
   }
 
   // Переработанный transferFunds: принимает номера счетов
@@ -170,9 +148,6 @@ const Bank = (function () {
 
     // Проверка баланса: добавим внутренний геттер
     const currentBalance = (function () {
-      // Так как _balance в замыкании, единственный способ — добавить метод
-      // Уже есть: можно добавить _getBalance()
-      // Добавим его в аккаунт выше
       return fromAccount._getBalance();
     })();
 
@@ -200,17 +175,6 @@ const Bank = (function () {
     });
   }
 
-  // Добавим _getBalance в аккаунт (внутренний)
-  // → обновим createAccount:
-
-  // Но чтобы не дублировать, перепишем createAccount с учётом этого:
-
-  // --- Обновлённая createAccount (внутри Bank) ---
-  // (уже включена выше, но добавим _getBalance)
-
-  // Пересоздадим createAccount с _getBalance:
-
-  // ✅ Финальная версия createAccount (внутри Bank):
   function createAccountFinal(holderName, initialBalance, pinCode) {
     if (initialBalance < 0) throw new Error('Initial balance cannot be negative');
     const accountNumber = generateUniqueAccountNumber();
@@ -277,6 +241,7 @@ const Bank = (function () {
   };
 })();
 
+/*
 const acc1 = Bank.createAccount("Alice", 1000, 1234);
 const acc2 = Bank.createAccount("Bob", 500, 5678);
 
@@ -289,3 +254,4 @@ console.log(acc1.getBalance(1234)); // 800
 console.log(acc2.getBalance(5678)); // 800
 
 console.log(acc1.getTransactionHistory(1234, 7));
+*/
